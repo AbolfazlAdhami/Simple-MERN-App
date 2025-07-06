@@ -7,7 +7,7 @@ export const authContext = createContext({
 });
 
 function AuthContextProvider({ children }) {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   const loginHandler = async () => {};
   const logoutHandler = async () => {};
