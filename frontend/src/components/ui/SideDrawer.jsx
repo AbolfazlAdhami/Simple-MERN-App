@@ -3,7 +3,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { CgClose } from "react-icons/cg";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
-import { authContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 
@@ -12,7 +12,7 @@ function SideDrawer() {
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
-  const { isLoggedIn, logout } = useContext(authContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <>

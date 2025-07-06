@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { authContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import Button from "./Button";
 
 function Navigator() {
-  const { isLoggedIn, logout } = useContext(authContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
   return (
     <nav className="hidden w-full sm:flex items-center justify-start gap-3">
       <NavLink to={"/"} className={"text-xl font-bold "}>
