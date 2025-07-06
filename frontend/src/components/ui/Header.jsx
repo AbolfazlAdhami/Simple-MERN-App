@@ -1,11 +1,12 @@
 import React from "react";
 import Navigator from "./Navigator";
- 
+import SideDrawer from "./SideDrawer";
 
 function Header() {
   return (
-    <header className="mt-0 flex items-center justify-between">
+    <header className="bg-slate-800 h-20 px-6 w-screen flex items-center  ">
       <Navigator />
+      <SideDrawer />
     </header>
   );
 }

@@ -1,18 +1,26 @@
 import { Routes, Route } from "react-router-dom";
-import { AuthPage, EditePlace, MainPage, NewPlace, PlaceDetails, Places } from "./pages";
+import { AuthPage, EditePlace, Home, MainPage, NewPlace, PlaceDetails, Places } from "./pages";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { authContext } from "./context/AuthContext";
 function App() {
-  const { isLoggedIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
+  const { isLoggedIn } = useContext(authContext);
   return (
     <main className="bg-stone-950 text-white w-screen min-h-screen">
-      {/* <Routes>
-        <Route path="/">
+      <Routes>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route element={<MainPage />}>
+          <Route index element={<Home />} />
+          {isLoggedIn && (
+            <Route path="/place">
+              <Route index element={<Places />} />
+              <Route path=":id" element={<PlaceDetails />} />
+              <Route path="new" element={<NewPlace />} />
+              <Route path="edite/:id" element={<EditePlace />} />
+            </Route>
+          )}
           <Route />
         </Route>
-        <Route path="/auth" />
-      </Routes> */}
+      </Routes>
     </main>
   );
 }

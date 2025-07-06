@@ -4,3 +4,4 @@ export { default as PlaceDetails } from "./PlaceDetails";
 export { default as NewPlace } from "./NewPlace";
 export { default as EditePlace } from "./EditePlace";
 export { default as AuthPage } from "./AuthPage";
+export { default as Home } from "./Home";

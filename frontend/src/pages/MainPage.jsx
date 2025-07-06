@@ -1,11 +1,14 @@
 import React from "react";
 import { Header } from "../components";
+import { Outlet } from "react-router-dom";
 
-function MainPage() {
+function MainPage({ children }) {
   return (
-    <main>
+    <div className="w-screen min-h-screen flex flex-col">
       <Header />
-    </main>
+      {children}
+      <Outlet />
+    </div>
   );
 }
 
