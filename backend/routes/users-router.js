@@ -3,6 +3,8 @@ const { check } = require("express-validator");
 
 const router = express.Router();
 
-router.get("");
+router.get("/", (req, res) => {
+  res.json({ message: "" });
+});
 
 module.exports = router;
