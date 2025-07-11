@@ -56,7 +56,7 @@ router.post("/", [check("title").not().isEmpty(), check("description").isLength(
 
   try {
     const geocodingData = await getCoordsFromAddress(address);
-    console.log(geocodingData, "GeoData");
+
     coordinate = {
       lat: geocodingData.latitude,
       lng: geocodingData.longitude,
@@ -80,6 +80,22 @@ router.post("/", [check("title").not().isEmpty(), check("description").isLength(
   return res.status(201).json({ data: DUMMY_PLACES });
 });
 
-router.patch("/:id", [check("title").not().isEmpty(), check("description").isLength({ min: 5 }), check("address").not().isEmpty()], (req, res, next) => {});
+router.patch("/:id", [check("title").not().isEmpty(), check("description").isLength({ min: 5 })], (req, res, next) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) return next(new HttpError("Invalid inputes passed,please check your data.", 422));
+
+  const { id } = req.params;
+  const { title, description } = req.body;
+  let updatePlace = { ...DUMMY_PLACES.find((place) => place.id === id) };
+  if (!updatePlace) throw new HttpError(`User not upload place by this ${id}`, 404);
+  const placeIndex = DUMMY_PLACES.findIndex((place) => place.id === id);
+
+  updatePlace.title = title;
+  updatePlace.description = description;
+
+  DUMMY_PLACES[placeIndex] = updatePlace;
+
+  res.status(200).json({ data: updatePlace });
+});
 
 module.exports = router;
