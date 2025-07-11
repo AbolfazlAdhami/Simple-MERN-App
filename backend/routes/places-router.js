@@ -1,6 +1,9 @@
 const express = require("express");
-const { check } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const getCoordsFromAddress = require("../utils/location");
+const uuid = require("uuid");
+
 const router = express.Router();
 
 let DUMMY_PLACES = [
@@ -44,7 +47,37 @@ router.delete("/:id", (req, res, next) => {
   return res.status(200).json({ message: "Deleted Place" });
 });
 
-router.post("/", [check("title").not().isEmpty(), check("description").isLength({ min: 5 }), check("address").not().isEmpty()], (req, res, next) => {});
+router.post("/", [check("title").not().isEmpty(), check("description").isLength({ min: 5 }), check("address").not().isEmpty()], (req, res, next) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) return next(new HttpError("Invalid inputes passed,please check your data.", 422));
+
+  const { title, description, address } = req.body;
+
+  let coordinate;
+
+  try {
+    const geocodingData = getCoordsFromAddress(address);
+    console.log(geocodingData, "GeoData");
+  } catch (error) {
+    return next(error);
+  }
+
+  const newPlace = {
+    id: uuid.v4(),
+    title,
+    description,
+    location: {
+      lat: 0,
+      lng: -1,
+    },
+    address,
+    creator: "u1",
+  };
+
+  DUMMY_PLACES.push(newPlace);
+
+  return res.status(201).json({ data: DUMMY_PLACES });
+});
 
 router.patch("/:id", [check("title").not().isEmpty(), check("description").isLength({ min: 5 }), check("address").not().isEmpty()], (req, res, next) => {});
 
