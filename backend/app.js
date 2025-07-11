@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 //
 const usersRoutes = require("./routes/users-router");
-const placesRoutes = require("./routes/users-router");
+const placesRoutes = require("./routes/places-router");
 
 // Built in Middleware
 app.use(bodyParser.json());

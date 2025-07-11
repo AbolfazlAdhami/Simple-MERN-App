@@ -18,8 +18,8 @@ const getCoordsFromAddress = async (address = "20 W 34th St., New York, NY 10001
   if (!api_key) throw new HttpError("Could not Found Api KEy for Coords Data", 404);
 
   const { data, status } = await axios.request(options);
-  console.log(data, status);
-  return data;
+
+  if (status === 200 && data.Results) return data.Results[0];
 };
 
 module.exports = getCoordsFromAddress;

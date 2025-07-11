@@ -47,17 +47,20 @@ router.delete("/:id", (req, res, next) => {
   return res.status(200).json({ message: "Deleted Place" });
 });
 
-router.post("/", [check("title").not().isEmpty(), check("description").isLength({ min: 5 }), check("address").not().isEmpty()], (req, res, next) => {
+router.post("/", [check("title").not().isEmpty(), check("description").isLength({ min: 5 }), check("address").not().isEmpty()], async (req, res, next) => {
   const error = validationResult(req);
   if (!error.isEmpty()) return next(new HttpError("Invalid inputes passed,please check your data.", 422));
 
-  const { title, description, address } = req.body;
-
+  const { title, description, address, creator } = req.body;
   let coordinate;
 
   try {
-    const geocodingData = getCoordsFromAddress(address);
+    const geocodingData = await getCoordsFromAddress(address);
     console.log(geocodingData, "GeoData");
+    coordinate = {
+      lat: geocodingData.latitude,
+      lng: geocodingData.longitude,
+    };
   } catch (error) {
     return next(error);
   }
@@ -67,15 +70,13 @@ router.post("/", [check("title").not().isEmpty(), check("description").isLength(
     title,
     description,
     location: {
-      lat: 0,
-      lng: -1,
+      ...coordinate,
     },
     address,
-    creator: "u1",
+    creator,
   };
 
   DUMMY_PLACES.push(newPlace);
-
   return res.status(201).json({ data: DUMMY_PLACES });
 });
 
