@@ -49,6 +49,14 @@ router.post("/signup", validation.singup, async (req, res, next) => {
   return res.status(201), json({ message: "User Account Created!", data: createdUser });
 });
 
-router.post("/login", (req, res, next) => {});
+router.post("/login", (req, res, next) => {
+  const { email, password } = req.body;
+
+  const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
+  if (!identifiedUser) throw new HttpError("Could not identify user, ", 401);
+  if (identifiedUser.password !== password) throw new HttpError("User Password not seem to be wrong", 401);
+
+  req.json({ message: "Logged in!" });
+});
 
 module.exports = router;
