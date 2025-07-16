@@ -5,8 +5,12 @@ import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
-  const loginHandler = async () => {};
-  const logoutHandler = async () => {};
+  const loginHandler = async () => {
+    setIsLogged(true);
+  };
+  const logoutHandler = async () => {
+    setIsLogged(false);
+  };
 
   const value = useMemo(() => ({ isLoggedIn: isLogged, login: loginHandler, logout: logoutHandler }), [isLogged]);
   return (
