@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react";
+import { useState, useContext } from "react";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../utils/validators";
@@ -11,15 +11,27 @@ function AuthPage() {
 
   const { formState, inputHandler, setFormData } = useForm(
     {
-      email: { value: "", isValid: false },
-      password: { value: "", isValid: false },
+      email: {
+        value: "",
+        isValid: false,
+      },
+      password: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
 
-  const switchModeHandler = useCallback(() => {
+  const switchModeHandler = () => {
     if (!isLoginMode) {
-      setFormData({ ...formState.state, name: undefined }, formState.inputs.isValid.email.isValid && formState.inputs.password.isValid);
+      setFormData(
+        {
+          ...formState.inputs,
+          name: undefined,
+        },
+        formState.inputs.email.isValid && formState.inputs.password.isValid
+      );
     } else {
       setFormData(
         {
@@ -32,8 +44,8 @@ function AuthPage() {
         false
       );
     }
-    setIsLoginMode((pervState) => !pervState);
-  }, [formState, isLoginMode, setFormData]);
+    setIsLoginMode((prevMode) => !prevMode);
+  };
 
   const submitHandler = (event) => {
     event.perventDefault();
@@ -57,6 +69,14 @@ function AuthPage() {
             errorText="Please enter a valid password, at least 5 characters."
             onInput={inputHandler}
           />
+
+          <Button type="submit" className={"bg-sky-400 text-white hover:bg-sky-800"} disabled={!formState.isValid}>
+            {isLoginMode ? "LOGIN" : "SIGNUP"}
+          </Button>
+
+          <Button type={"button"} className={"bg-amber-600 hover:bg-amber-400"} onClick={switchModeHandler}>
+            SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
+          </Button>
         </form>
       </div>
     </section>

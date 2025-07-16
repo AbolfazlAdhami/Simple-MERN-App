@@ -4,7 +4,12 @@ function Button({ onClick, children, className, disable = false, type }) {
   // type = "link" || 'primary' || 'success'
 
   return (
-    <button disabled={disable} className={`${className} border border-slate-50 cursor-pointer  p-4 rounded bg-sky-400 hover:bg-sky-600 hover:shadow-lg text-white`} type="button" onClick={onClick}>
+    <button
+      disabled={disable}
+      className={`${className} shadow hover:shadow-lg ease-in transition-all duration-200 my-2 cursor-pointer  p-2 rounded-lg text-white text-lg font-bold ${disable && "bg-gray-700"}`}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
