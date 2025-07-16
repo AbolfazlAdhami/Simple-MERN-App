@@ -9,7 +9,7 @@ function AuthPage() {
   const { login } = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
 
-  const { formState, inputHanlder, setFormData } = useForm(
+  const { formState, inputHandler, setFormData } = useForm(
     {
       email: { value: "", isValid: false },
       password: { value: "", isValid: false },
@@ -46,8 +46,17 @@ function AuthPage() {
       <div className="md:w-2/5 w-full bg-slate-200 shadow-lg p-4  rounded-lg">
         <h1 className="font-bold text-2xl mb-6">Login Form</h1>
         <form className="flex flex-col" onSubmit={submitHandler}>
-          {/* <Input /> */}
-          <Button />
+          {!isLoginMode && <Input element="input" id="name" type="text" label="Your Name" validators={[VALIDATOR_REQUIRE()]} errorText="Please enter a name." onInput={inputHandler} />}
+          <Input element="input" id="email" type="email" label="E-Mail" validators={[VALIDATOR_EMAIL()]} errorText="Please enter a valid email address." onInput={inputHandler} />
+          <Input
+            element="input"
+            id="password"
+            type="password"
+            label="Password"
+            validators={[VALIDATOR_MINLENGTH(5)]}
+            errorText="Please enter a valid password, at least 5 characters."
+            onInput={inputHandler}
+          />
         </form>
       </div>
     </section>
