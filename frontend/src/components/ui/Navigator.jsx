@@ -7,21 +7,21 @@ function Navigator() {
   const { isLoggedIn, logout } = useContext(AuthContext);
   return (
     <nav className="hidden w-full sm:flex items-center justify-start gap-3">
-      <NavLink to={"/"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all ease-in font-bold "}>
-        Home
+      <NavLink to={"/"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
+        All Users
       </NavLink>
       {isLoggedIn && (
-        <NavLink to={"/place"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all ease-in font-bold "}>
+        <NavLink to={"/place"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
           My Places
         </NavLink>
       )}
       {isLoggedIn && (
-        <NavLink to={"/place/new"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all ease-in font-bold "}>
-          Add New Place
+        <NavLink to={"/place/new"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
+          Add Place
         </NavLink>
       )}
       {!isLoggedIn && (
-        <NavLink to={"/auth"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all ease-in font-bold "}>
+        <NavLink to={"/auth"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
           Login
         </NavLink>
       )}
