@@ -5,13 +5,13 @@ function UserItem({ user }) {
   const { image, name, places: placeCount } = user;
 
   return (
-    <li className="border-b border-slate-950 flex items-center justify-between p-2">
-      <Avatar image={image} />
-      <h1 className="text-start">{name}</h1>
-      <p>
-        {placeCount} {placeCount === 1 ? "Place" : "Places"}
-      </p>
-    </li>
+    <tr className="border-b rounde-lg">
+      <td className="flex justify-center items-center bg-slate-200 ">
+        <Avatar image={image} />
+      </td>
+      <td className="p-1 rounded-lg">{name}</td>
+      <td className="p-1 rounded-lg">{placeCount ? ` ${placeCount} ${placeCount > 1 ? "Place" : "Places"}` : "No Place"}</td>
+    </tr>
   );
 }
 
