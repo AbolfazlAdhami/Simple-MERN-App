@@ -7,7 +7,7 @@ function UserItem({ user }) {
   return (
     <li className="border-b border-slate-950 flex items-center justify-between p-2">
       <Avatar image={image} />
-      <h1>{name}</h1>
+      <h1 className="text-start">{name}</h1>
       <p>
         {placeCount} {placeCount === 1 ? "Place" : "Places"}
       </p>
