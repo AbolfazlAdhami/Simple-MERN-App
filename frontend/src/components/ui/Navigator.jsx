@@ -11,12 +11,12 @@ function Navigator() {
         All Users
       </NavLink>
       {isLoggedIn && (
-        <NavLink to={"/place"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
+        <NavLink to={"/u1/places"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
           My Places
         </NavLink>
       )}
       {isLoggedIn && (
-        <NavLink to={"/place/new"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
+        <NavLink to={"/places/new"} className={"text-xl hover:border-b-slate-50 hover:border-b transition-all duration-75 ease-in font-bold "}>
           Add Place
         </NavLink>
       )}
@@ -28,7 +28,7 @@ function Navigator() {
       {isLoggedIn && (
         <Button
           onClick={() => logout()}
-          className={"bg-slate-50 border border-slate-50 text-slate-950 hover:text-slate-50 hover:bg-transparent transition ease-in duration-200  rounded-lg self-end p-1 px-2 ml-auto"}
+          className={"bg-slate-950 border border-slate-950 text-slate-950 hover:text-slate-950 hover:bg-transparent transition ease-in duration-200  rounded-lg self-end p-1 px-2 ml-auto"}
         >
           <p className="text-xl font-bold ">Logout</p>
         </Button>

@@ -18,7 +18,7 @@ function App() {
       <MainPage>
         {isLogged ? (
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />}></Route>
             <Route path="/:userId/places" element={<Places />} />
             <Route path="/places/:placeId" element={<PlaceDetails />} />
             <Route path="/places/new" element={<NewPlace />} />

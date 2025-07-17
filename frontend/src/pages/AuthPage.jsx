@@ -48,7 +48,7 @@ function AuthPage() {
   };
 
   const submitHandler = (event) => {
-    event.perventDefault();
+    event.preventDefault();
     console.log(formState.inputs);
     login();
   };
