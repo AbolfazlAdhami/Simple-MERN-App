@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
+import { Input, Button } from "../components";
+
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../utils/validators";
 import { useForm } from "../hook/useForm";
 import { AuthContext } from "../context/AuthContext";
