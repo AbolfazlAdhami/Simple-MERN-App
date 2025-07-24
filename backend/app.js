@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
 const HttpError = require("./models/http-error");
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,6 +32,11 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An not find this route" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+mongoose
+  .connect(process.env.DATA_BASE_URL)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));
