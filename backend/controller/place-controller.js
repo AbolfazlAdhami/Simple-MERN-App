@@ -54,14 +54,6 @@ const getPlacesByUserId = async (req, res, next) => {
 
 };
 
-const deleltePlaceById = (req, res, next) => {
-  const { id } = req.params;
-
-  if (!DUMMY_PLACES.find((p) => p.id === id)) throw new HttpError(`Could not find Place by this ID:${id}`, 404);
-
-  DUMMY_PLACES = DUMMY_PLACES.filter((p) => p.id !== id);
-  return res.status(200).json({ message: "Deleted Place" });
-};
 
 const createPlace = async (req, res, next) => {
   const error = validationResult(req);
@@ -81,19 +73,40 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  const newPlace = {
-    id: uuid.v4(),
+  const createPlace = new Place({
     title,
     description,
     location: {
       ...coordinate,
     },
     address,
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg', // => File Upload module, will be replaced with real image url
     creator,
-  };
+  });
 
-  DUMMY_PLACES.push(newPlace);
-  return res.status(201).json({ data: DUMMY_PLACES });
+  let user
+  try {
+    user = await User.findById(creator)
+  } catch (error) {
+    return next(new HttpError('Creating place failed , please try again', 500))
+  }
+
+  if (!user) return next(new HttpError('Could not find user by provide id.', 404))
+  console.log(user)
+
+  try {
+    const sess = await mongoose.startSession()
+    sess.startTransaction()
+    await createPlace.save()
+    user.places.push(createPlace)
+    await user.save({ session: sess })
+    await sess.commitTransaction()
+
+  } catch (error) {
+    return next(new HttpError('Creating place failed, please try again', 500))
+  }
+  return res.status(201).json({ place, createPlace })
 };
 
 const updatePlaceById = (req, res, next) => {
@@ -113,5 +126,19 @@ const updatePlaceById = (req, res, next) => {
 
   res.status(200).json({ data: updatePlace });
 };
+
+const deleltePlaceById = async (req, res, next) => {
+  const { id } = req.params;
+
+  let place = await Place.findById(id).populate('creator')
+
+  if (!DUMMY_PLACES.find((p) => p.id === id)) throw new HttpError(`Could not find Place by this ID:${id}`, 404);
+
+  DUMMY_PLACES = DUMMY_PLACES.filter((p) => p.id !== id);
+  return res.status(200).json({ message: "Deleted Place" });
+};
+
+
+
 
 module.exports = { getPlaceById, getPlacesByUserId, deleltePlaceById, createPlace, updatePlaceById };
