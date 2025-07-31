@@ -1,7 +1,13 @@
 const uuid = require("uuid");
 const { validationResult } = require("express-validator");
-const getCoordsFromAddress = require("../utils/location");
+const mongoose = require('mongoose')
+
 const HttpError = require("../models/http-error");
+const getCoordsFromAddress = require("../utils/location");
+const Place = require('../models/Place');
+const User = require('../models/User');
+const { json } = require("body-parser");
+
 
 let DUMMY_PLACES = [
   {
@@ -17,22 +23,35 @@ let DUMMY_PLACES = [
   },
 ];
 
-const getPlaceById = (req, res, next) => {
+const getPlaceById = async (req, res, next) => {
   const { id } = req.params;
-  const place = DUMMY_PLACES.find((place) => place.id == id);
-  if (!place) throw new HttpError(`Could not find place by this id: ${id} `, 404);
+  let place
+  try {
+    place = await Place.findById(id)
+  } catch (err) {
 
-  return res.json({ place });
+    return next(new HttpError(`Something went wrong, could not find place ,${err} `, 500))
+  }
+
+  if (!place) return next(new HttpError('Could not find place by provided id.', 404))
+
+  return res.json({ place: place.toObject({ getters: true }) })
+
 };
 
-const getPlacesByUserId = (req, res, next) => {
+const getPlacesByUserId = async (req, res, next) => {
   const { id } = req.params;
+  let userPlaces
+  try {
+    userPlaces = await User.findById(id).populate('places')
+  } catch (err) {
+    return next(new HttpError('Fetching places failed, please try again later.',
+      500))
+  }
+  if (!userPlaces || userPlacesplaces.length === 0) return next(new HttpError('Could not find places for provided id', 404))
 
-  const places = DUMMY_PLACES.filter((place) => place.creator === id);
+  return res.json({ places: userPlaces.places.map(place => place.toObject({ getters: true })) })
 
-  if (!places || places.length === 0) throw new HttpError(`User not upload place by this ${id}`, 404);
-
-  return res.json({ places });
 };
 
 const deleltePlaceById = (req, res, next) => {
