@@ -1,4 +1,3 @@
-const uuid = require("uuid");
 const { validationResult } = require("express-validator");
 const mongoose = require('mongoose')
 
@@ -6,7 +5,6 @@ const HttpError = require("../models/http-error");
 const getCoordsFromAddress = require("../utils/location");
 const Place = require('../models/Place');
 const User = require('../models/User');
-const { json } = require("body-parser");
 
 
 let DUMMY_PLACES = [
@@ -109,22 +107,30 @@ const createPlace = async (req, res, next) => {
   return res.status(201).json({ place, createPlace })
 };
 
-const updatePlaceById = (req, res, next) => {
+const updatePlaceById = async (req, res, next) => {
   const error = validationResult(req);
-  if (!error.isEmpty()) return next(new HttpError("Invalid inputes passed,please check your data.", 422));
+  if (!error.isEmpty()) return next(new HttpError('Something went wrong, could not update place.', 422));
 
   const { id } = req.params;
   const { title, description } = req.body;
-  let updatePlace = { ...DUMMY_PLACES.find((place) => place.id === id) };
-  if (!updatePlace) throw new HttpError(`User not upload place by this ${id}`, 404);
-  const placeIndex = DUMMY_PLACES.findIndex((place) => place.id === id);
 
-  updatePlace.title = title;
-  updatePlace.description = description;
+  let place;
+  try {
+    place = await Place.findById(id)
+  } catch (error) {
+    return next(new HttpError("Could not find place bu provided id", 500))
+  }
 
-  DUMMY_PLACES[placeIndex] = updatePlace;
+  place.title=title
+  place.description=description
 
-  res.status(200).json({ data: updatePlace });
+  try {
+    await place.save()
+  } catch (error) {
+    return next(new HttpError("Could not find place bu provided id", 500))
+  }
+
+  return res.status(200).json({ place:place.toObject({getters:true}) });
 };
 
 const deleltePlaceById = async (req, res, next) => {
