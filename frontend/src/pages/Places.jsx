@@ -35,7 +35,6 @@ function Places() {
   return (
     <div className="container grid my-12">
       <h1>{loadedPlaces.length > 0 ? `Found ${loadedPlaces.length} Places` : "Found Nothing"}</h1>
-      
     </div>
   );
 }

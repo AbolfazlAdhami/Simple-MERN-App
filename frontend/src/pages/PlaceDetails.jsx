@@ -1,6 +1,8 @@
 import React from "react";
 
-function PlaceDetails() {
+function PlaceDetails({ title, description, imageUrl, address, location }) {
+
+  
   return <div>PlaceDetails</div>;
 }
 
