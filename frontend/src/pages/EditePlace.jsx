@@ -1,7 +1,7 @@
 import React from "react";
 
-function EditePlace() {
-  return <div>EditePlace</div>;
+function EditPlace() {
+  return <div>EditPlace</div>;
 }
 
-export default EditePlace;
+export default EditPlace;

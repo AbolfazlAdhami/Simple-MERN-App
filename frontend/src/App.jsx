@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { AuthPage, EditePlace, Home, MainPage, NewPlace, PlaceDetails, Places } from "./pages";
+import { AuthPage, EditPlace, Home, MainPage, NewPlace, PlaceDetails, Places } from "./pages";
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
             <Route path="/:userId/places" element={<Places />} />
             <Route path="/places/:placeId" element={<PlaceDetails />} />
             <Route path="/places/new" element={<NewPlace />} />
-            <Route path="/places/edite/:placeId" element={<EditePlace />} />
+            <Route path="/places/edit/:placeId" element={<EditPlace />} />
           </Routes>
         ) : (
           <Routes>
