@@ -13,21 +13,13 @@ function Users({ users }) {
 
   return (
     <section className="container my-12 flex justify-center items-center ">
-      <div className="w-full bg-slate-200  rounded-lg">
-        <table className="table rounded-lg border-separate border-spacing-2  w-full">
-          <thead className="bg-slate-300">
-            <tr>
-              <th className="p-2 rounded-lg text-center">Avatar</th>
-              <th className="p-2 rounded-lg text-start">User Name</th>
-              <th className="p-2 rounded-lg text-start">Place Count</th>
-            </tr>
-          </thead>
-          <tbody className="bg-slate-300">
-            {users.map((user) => (
-              <UserItem user={user} key={user.id} />
-            ))}
-          </tbody>
-        </table>
+      <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 ">
+        {users.map((user) => (
+          <div className="rounded-lg" key={user.id}>
+            <Avatar />
+            <h2></h2>
+          </div>
+        ))}
       </div>
     </section>
   );
