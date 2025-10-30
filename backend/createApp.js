@@ -2,20 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const HttpError = require("./models/http-error");
+const router = require("./routes/index");
 
-
-
-export function createApp() {
+function createApp() {
   const app = express();
 
   app.use(bodyParser.json());
   app.use(cors());
   app.use(express.json());
 
-
   app.use((error, req, res, next) => {
     if (res.headerSent) return next(error);
-  
+
     res.status(error.code || 500);
     res.json({ message: error.message || "An not find this route" });
   });
@@ -31,11 +29,9 @@ export function createApp() {
     throw error;
   });
 
-  app.use(router)
+  app.use(router);
 
-
-
-
-
-  return app
+  return app;
 }
+
+  module.exports = createApp;
