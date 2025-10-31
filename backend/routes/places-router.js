@@ -8,10 +8,13 @@ router.get("/:id", getPlaceById);
 
 router.get("/user/:id", getPlacesByUserId);
 
-router.delete("/:id", deleltePlaceById);
+router.use();
 
 router.post("/", validation.postPlace, createPlace);
 
 router.patch("/:id", validation.pathPlace, updatePlaceById);
+
+router.delete("/:id", deleltePlaceById);
+
 
 module.exports = router;

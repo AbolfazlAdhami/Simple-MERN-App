@@ -1,5 +1,11 @@
 const { Router } = require("express");
+const userRouter = require("./users-router");
+const placeRouter = require("./places-router");
 
 const router = Router();
+
+router.use(userRouter);
+router.use(placeRouter);
+
 
 module.exports = router;
