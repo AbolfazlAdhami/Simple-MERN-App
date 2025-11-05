@@ -4,6 +4,8 @@ const { getPlaceById, getPlacesByUserId, deleltePlaceById, createPlace, updatePl
 const checkAuth = require("../middleware/check-auth");
 const fileUpload = require("../middleware/file-uploader");
 
+
+
 const router = express.Router();
 
 router.get("/:id", getPlaceById);
