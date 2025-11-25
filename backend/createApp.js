@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const path = require("path");
+
 const HttpError = require("./models/http-error");
-const router = require("./routes/index");
 
 function createApp() {
   const app = express();
@@ -10,6 +12,8 @@ function createApp() {
   app.use(bodyParser.json());
   app.use(cors());
   app.use(express.json());
+
+  app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
   app.use((error, req, res, next) => {
     if (res.headerSent) return next(error);
@@ -29,9 +33,17 @@ function createApp() {
     throw error;
   });
 
+  app.use((error, req, res, next) => {
+    if (req.file) return fs.unlink(req.file.path, (err) => console.log(err));
+    if (res.headerSent) return next(error);
+
+    res.status(error.code || 500);
+    res.json({ message: error.message || "An unknown error occurred!" });
+  });
+
   app.use(router);
 
   return app;
 }
 
-  module.exports = createApp;
+module.exports = createApp;
