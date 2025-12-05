@@ -6,7 +6,6 @@ dotenv.config();
 const app = createApp();
 const PORT = process.env.PORT || 5000;
 const DATABASEURL = process.env.DATA_BASE_URL;
-console.log(DATABASEURL);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
