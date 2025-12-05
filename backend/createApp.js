@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
-
+const router = require("./routes");
 const HttpError = require("./models/http-error");
 
 function createApp() {

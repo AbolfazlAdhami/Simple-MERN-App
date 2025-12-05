@@ -5,7 +5,7 @@ const { createUserHandler, loginUserHandler, getUsersHandler } = require("../con
 
 router.get("/", getUsersHandler);
 
-router.post("/signup", validation.singup, createUserHandler);
+router.post("/signup", validation.signup, createUserHandler);
 
 router.post("/login", loginUserHandler);
 
