@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const HttpError = require("../models/http-error");
 
+
 const getUsersHandler = async (req, res, next) => {
   let users;
   try {
