@@ -4,8 +4,8 @@ const placeRouter = require("./places-router");
 
 const router = Router();
 
-router.use(userRouter);
-router.use(placeRouter);
+router.use("/user", userRouter);
+router.use("/places", placeRouter);
 
 
 module.exports = router;

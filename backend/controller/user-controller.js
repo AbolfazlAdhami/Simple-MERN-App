@@ -17,7 +17,7 @@ const getUsersHandler = async (req, res, next) => {
 
 const createUserHandler = async (req, res, next) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) throw new HttpError("Invalid inputs passed , Please check your data", 422);
+  if (!errors.isEmpty()) return next(new HttpError("Invalid inputs passed , Please check your data", 422));
 
   const { name, email, password } = req.body;
 
